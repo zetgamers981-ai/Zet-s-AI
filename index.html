@@ -52,8 +52,66 @@ function status(s){$("#chatStatus").textContent=s}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(chat.slice(-150)))}catch(e){status("Penyimpanan lokal tidak tersedia")}}
 function bubble(text,role,store=true){const el=document.createElement("div");el.className="bubble "+role;el.textContent=String(text);messages.appendChild(el);messages.scrollTop=messages.scrollHeight;if(store&&(role==="user"||role==="assistant")){chat.push({role,text:String(text),time:new Date().toISOString()});chat=chat.slice(-150);save()}return el}
 function renderChat(){messages.replaceChildren();if(!chat.length){bubble("Halo! 👋 Saya Zet's AI.\n\nFitur chat dasar, pencarian web, studio penulisan, prompt gambar, suara, tema, dan riwayat tersedia.\n\nCatatan: jawaban chat masih demo. Untuk AI sungguhan, perlu backend AI yang aman.","assistant",false)}else chat.forEach(m=>bubble(m.text,m.role,false))}
+
+async function askZetsAI(message) {
+  const response = await fetch(
+    "https://zet-s-ai.vercel.app/api/chat",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: message
+      })
+    }
+  );
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(
+      data.error || "Gagal menghubungi AI."
+    );
+  }
+
+  return data.reply;
+}
+
+                           
 function demoReply(t){const s=t.toLowerCase();if(/\b(halo|hai|hello|hi)\b/.test(s))return"Halo! 👋 Ada yang bisa saya bantu? Ini masih mode demo.";if(s.includes("siapa kamu"))return"Saya Zet's AI, asisten digital dalam proyek yang sedang kamu bangun. Chat belum terhubung ke model AI.";if(s.includes("terima kasih"))return"Sama-sama! 😊";if(s.startsWith("cari di internet:")){const q=t.slice(t.indexOf(":")+1).trim();if(q)window.open("https://www.google.com/search?q="+encodeURIComponent(q),"_blank","noopener,noreferrer");return"Saya membuka Google untuk pencarian itu. Saya belum otomatis membaca hasilnya."}return"Pesanmu diterima. Chat masih dalam mode demo, belum menggunakan model AI sungguhan.\n\nUntuk mencari, ketik: Cari di internet: topik yang kamu inginkan"}
-async function send(t){t=t.trim();if(!t||sendBtn.disabled)return;bubble(t,"user");input.value="";sendBtn.disabled=true;const wait=bubble("Zet sedang menyiapkan jawaban…","system",false);try{await new Promise(r=>setTimeout(r,200));wait.remove();bubble(demoReply(t),"assistant")}catch(e){wait.remove();bubble("Terjadi kesalahan. Coba lagi.","assistant")}finally{sendBtn.disabled=false;input.focus()}}
+
+async function send(t) {
+  t = t.trim();
+  if (!t || sendBtn.disabled) return;
+
+  bubble(t, "user");
+  input.value = "";
+  sendBtn.disabled = true;
+
+  const wait = bubble(
+    "Zet sedang berpikir…",
+    "system",
+    false
+  );
+
+  try {
+    const reply = await askZetsAI(t);
+    wait.remove();
+    bubble(reply, "assistant");
+  } catch (e) {
+    wait.remove();
+    bubble(
+      "Maaf, Zet belum bisa menjawab. " +
+      (e.message || "Coba lagi nanti."),
+      "assistant"
+    );
+  } finally {
+    sendBtn.disabled = false;
+    input.focus();
+  }
+}
+
 $("#chatForm").addEventListener("submit",e=>{e.preventDefault();send(input.value)});
 document.querySelectorAll(".nav").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n===b));document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="view-"+b.dataset.view));if(b.dataset.view==="history")renderHistory()}));
 $("#themeBtn").addEventListener("click",()=>{const light=document.documentElement.classList.toggle("light");$("#themeBtn").textContent=light?"🌙 Tema":"☀️ Tema";try{localStorage.setItem("zets_ai_theme",light?"light":"dark")}catch{}});
