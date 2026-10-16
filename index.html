@@ -20,7 +20,29 @@
 <section class="view" id="view-voice"><div class="head"><h2>Asisten suara</h2><p>Tergantung dukungan browser dan perangkat.</p></div><div class="content"><button class="primary" id="listenBtn">🎙️ Mulai bicara</button><div class="card"><h3>Hasil ucapan</h3><div class="result" id="voiceResult">Belum ada ucapan.</div></div><label for="speakText">Teks untuk dibacakan</label><textarea id="speakText" placeholder="Tulis teks di sini"></textarea><button id="speakBtn">🔊 Bacakan teks</button><div class="notice" id="voiceNotice">Izin mikrofon hanya diperlukan untuk pengenalan suara.</div></div></section>
 <section class="view" id="view-history"><div class="head"><h2>Riwayat chat</h2><p>Hanya tersimpan di perangkat ini.</p></div><div class="content"><div class="row"><button id="refreshHistory">Muat ulang</button><button id="clearHistory">Hapus riwayat</button></div><div class="card" id="historyList">Belum ada riwayat.</div></div></section>
 </main></div><div class="footer"><span id="connectionStatus">Memeriksa koneksi…</span><br>Jangan masukkan kata sandi, PIN, atau informasi rahasia.</div></div>
-<script>
+<script>async function askZetsAI(message, history = []) {
+  const response = await fetch(
+    "https://DOMAIN-KAMU.vercel.app/api/chat",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: message,
+        history: history.slice(-8)
+      })
+    }
+  );
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.error || "Gagal menghubungi AI.");
+  }
+
+  return data.reply;
+}
 (() => {
 "use strict";
 const $=s=>document.querySelector(s), KEY="zets_ai_messages_v1";
