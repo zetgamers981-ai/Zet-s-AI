@@ -1,6 +1,4 @@
 
-import { GoogleGenAI } from "@google/genai";
-
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
@@ -11,7 +9,9 @@ export default async function handler(req, res) {
     });
   }
 
-  if (!process.env.GEMINI_API_KEY) {
+  const apiKey = process.env.GROQ_API_KEY;
+
+  if (!apiKey) {
     return res.status(500).json({
       error: "Backend belum dikonfigurasi."
     });
@@ -38,46 +38,64 @@ export default async function handler(req, res) {
         )
         .slice(-8)
         .map(item => ({
-          role: item.role === "assistant" ? "model" : "user",
-          parts: [{ text: item.content.slice(0, 1500) }]
+          role: item.role,
+          content: item.content.slice(0, 1500)
         }))
     : [];
 
   try {
-    const ai = new GoogleGenAI({
-      apiKey: process.env.GEMINI_API_KEY
-    });
+    const upstream = await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: process.env.GROQ_MODEL || "openai/gpt-oss-20b",
+          messages: [
+            {
+              role: "system",
+              content:
+                "Kamu adalah Zet's AI, asisten yang ramah, jelas, dan membantu. Jawab sesuai bahasa pengguna."
+            },
+            ...history,
+            {
+              role: "user",
+              content: message.trim()
+            }
+          ],
+          max_tokens: 600
+        })
+      },
+    );
 
-    const result = await ai.models.generateContent({
-      model: process.env.GEMINI_MODEL || "gemini-2.5-flash",
-      contents: [
-        ...history,
-        {
-          role: "user",
-          parts: [{ text: message.trim() }]
-        }
-      ],
-      config: {
-        systemInstruction:
-          "Kamu adalah Zet's AI, asisten yang ramah, jelas, dan membantu.",
-        maxOutputTokens: 600
-      }
-    });
+    if (!upstream.ok) {
+      // Jangan kirim detail internal provider ke aplikasi.
+      console.error("Groq API status:", upstream.status);
+      return res.status(502).json({
+        error: upstream.status === 429
+          ? "Batas penggunaan AI tercapai. Coba lagi nanti."
+          : "Layanan AI sedang bermasalah."
+      });
+    }
 
-    if (!result.text?.trim()) {
+    const result = await upstream.json();
+    const reply = result.choices?.[0]?.message?.content;
+
+    if (typeof reply !== "string" || !reply.trim()) {
       return res.status(502).json({
         error: "AI belum memberikan jawaban."
       });
     }
 
     return res.status(200).json({
-      reply: result.text.trim()
+      reply: reply.trim()
     });
-  } catch (error) {
-    console.error("Gemini API error:", error.status || "unknown");
-
+  } catch {
     return res.status(502).json({
-      error: "Layanan AI bermasalah. Coba lagi nanti."
+      error: "Tidak dapat terhubung ke layanan AI."
     });
   }
 }
