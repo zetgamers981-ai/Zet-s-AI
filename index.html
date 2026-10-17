@@ -4,81 +4,374 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#05091e">
-<meta name="description" content="Zets AI Smart Assistant — teman pintar untuk belajar, bekerja, dan berkreasi.">
 <title>Zets AI — Smart Assistant</title>
 <style>
-:root{color-scheme:dark;--bg:#04081a;--panel:#07112b;--cyan:#00eaff;--pink:#ff3ee8;--purple:#a855ff;--green:#00f5a0;--text:#f4f7ff;--muted:#aab8dd}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 78% 8%,#23104f 0,transparent 34%),radial-gradient(ellipse at 35% 35%,#071d47 0,transparent 42%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
-button,input,textarea{font:inherit}button{cursor:pointer;color:inherit}.topbar{height:72px;display:flex;align-items:center;justify-content:space-between;padding:10px 22px;border-bottom:1px solid #173a76;background:#030719eF;position:sticky;top:0;z-index:5;backdrop-filter:blur(14px)}.brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:23px;line-height:1.05}.logo{font-size:48px;font-weight:1000;font-style:italic;line-height:1;background:linear-gradient(135deg,var(--cyan),var(--purple),var(--pink));color:transparent;background-clip:text}.brand small{display:block;color:var(--pink);font-size:13px;letter-spacing:1.6px}.top-actions{display:flex;align-items:center;gap:12px}.online{color:var(--green);font-size:13px}.outline{background:#080f2b;border:1px solid #354c89;border-radius:12px;padding:9px 12px}.layout{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:calc(100vh - 72px)}aside{border-right:1px solid #18396b;padding:20px 14px;background:#03091be8;display:flex;flex-direction:column;gap:7px}.nav{display:flex;gap:12px;align-items:center;text-align:left;padding:12px;border:1px solid transparent;border-radius:13px;background:transparent;color:#dce5ff}.nav .ico{width:28px;text-align:center;font-size:21px;color:#f26df4}.nav.active,.nav:hover{border-color:var(--purple);background:linear-gradient(100deg,#073a62,#301052);box-shadow:0 0 18px #8a31ff38;color:var(--cyan)}.side-card{margin-top:auto;padding:18px 13px;border:1px solid var(--pink);border-radius:18px;text-align:center;background:linear-gradient(145deg,#06133b,#1c0735);box-shadow:0 0 22px #8c28ff24}.side-card .bolt{font-size:34px;color:var(--cyan)}.side-card h2{margin:4px}.side-card p{color:#e3a4ff;margin:8px 0 14px}.gradient-btn{border:0;border-radius:999px;padding:11px 18px;color:#071026;font-weight:800;background:linear-gradient(100deg,var(--cyan),var(--purple),var(--pink));box-shadow:0 0 18px #b12cff33}.main{padding:20px;min-width:0}.hero{position:relative;overflow:hidden;border:1px solid #153f83;border-radius:22px;padding:28px;background:linear-gradient(100deg,#06102cf5,#0a1644d9 58%,#180b37c9);min-height:235px;display:flex;align-items:center}.hero:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 48px,#14baff09 49px 50px),linear-gradient(0deg,#00d9ff12 1px,transparent 1px);background-size:auto,100% 26px;transform:perspective(400px) rotateX(10deg);pointer-events:none}.hero-copy{position:relative;z-index:1;max-width:68%}.eyebrow{color:var(--cyan);letter-spacing:2px;text-transform:uppercase;font-size:11px;font-weight:800}.hero h1{font-size:clamp(27px,4vw,45px);line-height:1.08;margin:10px 0}.gradient-text{background:linear-gradient(90deg,var(--cyan),#8c8bff,var(--pink));color:transparent;background-clip:text}.hero p{color:#d2defe;font-size:16px;max-width:580px;margin:10px 0 0}.anime{position:absolute;right:2%;bottom:-20px;width:31%;height:96%;display:flex;align-items:center;justify-content:center;font-size:clamp(75px,12vw,150px);filter:drop-shadow(0 0 18px #a92bff75);opacity:.95}.anime:after{content:"";position:absolute;inset:10% 5% 0;border:1px solid #b341ff6b;border-radius:48% 48% 10px 10px;background:linear-gradient(150deg,#00eaff17,#ff35dd21);z-index:-1}.features{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}.feature{border:1px solid var(--accent);border-radius:17px;padding:15px 13px;background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 12%,#071027),#080b20);box-shadow:0 0 15px color-mix(in srgb,var(--accent) 13%,transparent);display:flex;flex-direction:column;align-items:center;text-align:center;min-height:190px}.feature .big{font-size:35px;color:var(--accent)}.feature h3{margin:3px 0;color:var(--accent);font-size:16px}.feature p{color:#cbd5f2;font-size:12px;margin:4px 0 13px;flex:1}.feature button{width:100%;border:0;border-radius:999px;padding:9px 7px;background:var(--accent);color:#061025;font-weight:800;font-size:12px}.chat-layout{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:14px}.chat{border:1px solid #2356a6;border-radius:22px;padding:16px;background:#03091de8;min-width:0;box-shadow:0 0 24px #006bff0d}.chat-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:16px}.prompt-title{border:1px solid var(--pink);border-radius:999px;padding:9px 15px;color:#ff91f5;background:#190c30}.model{font-size:12px;color:#dbe5ff}.messages{min-height:150px;max-height:390px;overflow:auto;display:flex;flex-direction:column;gap:13px;padding:4px 0 12px}.message{display:flex;gap:10px;align-items:flex-start}.avatar{flex:0 0 42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--pink);background:#170d36;font-size:23px}.bubble{background:linear-gradient(120deg,#0a1534,#10102b);border:1px solid #2e4d8c;border-radius:17px;padding:12px 14px;max-width:100%;overflow-wrap:anywhere}.bubble p{margin:0 0 8px}.bubble p:last-child{margin-bottom:0}.message.user{justify-content:flex-end}.message.user .bubble{border-color:#00bfe7;background:#06233b}.quick{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0 13px}.chip{background:#070e27;border:1px solid #3164a8;border-radius:999px;padding:7px 10px;color:#bdefff;font-size:12px}.chip:hover{border-color:var(--pink);color:white}.composer{display:flex;align-items:flex-end;gap:8px;border:1px solid #7446e8;border-radius:18px;padding:8px;background:#050b20}.composer textarea{resize:vertical;min-height:42px;max-height:140px;flex:1;background:transparent;border:0;outline:none;color:white;padding:10px;min-width:0}.send{border:0;border-radius:13px;background:linear-gradient(135deg,var(--purple),var(--pink));width:43px;height:43px;font-size:20px;font-weight:900}.send:disabled{opacity:.5;cursor:wait}.status{color:var(--muted);font-size:11px;margin-top:7px;min-height:16px}.right-widgets{display:flex;flex-direction:column;gap:12px}.widget{border:1px solid #3864bb;border-radius:18px;padding:15px;background:linear-gradient(145deg,#08152f,#100a28)}.widget h3{margin:0 0 10px;color:var(--cyan);font-size:15px}.widget p,.widget li{font-size:12px;color:#cbd5f2}.widget ul{padding-left:17px;margin:0}.footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid #173b70;margin-top:20px;padding:17px 2px;color:#bdc8e7;font-size:12px}.footer strong{color:var(--cyan)}.toast{color:var(--green)}
-@media(max-width:1000px){.layout{grid-template-columns:190px minmax(0,1fr)}.features{grid-template-columns:repeat(2,minmax(0,1fr))}.chat-layout{grid-template-columns:1fr}.right-widgets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.anime{width:28%;opacity:.6}.hero-copy{max-width:80%}}
-@media(max-width:600px){.topbar{height:62px;padding:8px 12px}.brand{font-size:19px}.logo{font-size:39px}.top-actions{gap:6px}.top-actions .optional{display:none}.layout{display:block;min-height:calc(100vh - 62px)}aside{position:sticky;top:62px;z-index:4;flex-direction:row;overflow-x:auto;padding:8px;gap:6px;border-right:0;border-bottom:1px solid #173b70}.nav{flex:0 0 auto;padding:8px 11px;font-size:12px;gap:6px}.nav .ico{font-size:16px;width:auto}.side-card{display:none}.main{padding:12px}.hero{padding:20px 16px;min-height:205px}.hero-copy{max-width:100%}.hero h1{font-size:28px}.hero p{font-size:13px;max-width:85%}.anime{right:-2%;width:35%;font-size:90px;opacity:.25}.features{gap:8px;margin:10px 0}.feature{padding:12px 8px;min-height:178px}.feature .big{font-size:29px}.feature h3{font-size:14px}.feature p{font-size:11px}.feature button{font-size:11px}.chat{padding:11px;border-radius:17px}.chat-head{align-items:flex-start;flex-direction:column}.messages{max-height:48vh}.right-widgets{grid-template-columns:1fr 1fr}.widget{padding:11px}.footer{font-size:11px}.composer textarea{font-size:14px}}
-@media(prefers-reduced-motion:no-preference){.feature,.gradient-btn,.send{transition:transform .18s,filter .18s}.feature:hover{transform:translateY(-3px);filter:brightness(1.15)}.gradient-btn:hover,.send:hover{filter:brightness(1.2);transform:translateY(-1px)}}
+:root{
+color-scheme:dark;
+--bg:#04081a;
+--panel:#07112b;
+--cyan:#00eaff;
+--pink:#ff3ee8;
+--purple:#a855ff;
+--yellow:#ffc107;
+--green:#00f5a0;
+--text:#f4f7ff;
+--muted:#aab8dd;
+--dark-bg:#0a0e27;
+}
+*{box-sizing:border-box}
+body{
+margin:0;
+background: linear-gradient(135deg, #0a0e27 0%, #1a1435 50%, #0f1638 100%);
+color:var(--text);
+font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;
+min-height:100vh;
+background-attachment: fixed;
+}
+button,input,textarea{font:inherit}
+button{cursor:pointer;color:inherit}
+
+/* ===== TOPBAR ===== */
+.topbar{
+height:70px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 24px;
+background: rgba(10, 14, 39, 0.85);
+border-bottom: 1px solid rgba(0, 234, 255, 0.15);
+position:sticky;
+top:0;
+z-index:100;
+backdrop-filter:blur(12px);
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-z{
+font-size:36px;
+font-weight:900;
+font-style:italic;
+background:linear-gradient(135deg,var(--cyan),var(--purple),var(--pink));
+color:transparent;
+background-clip:text;
+line-height:1;
+}
+.brand-text h1{margin:0;font-size:20px;line-height:1.2;}
+.brand-text span{font-size:12px;color:var(--cyan);opacity:0.9;}
+.top-right{display:flex;align-items:center;gap:16px;}
+.status-online{display:flex;align-items:center;gap:6px;color:var(--green);font-size:14px;}
+.dot-green{width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);}
+.lang-btn, .theme-btn, .settings-btn{
+background:transparent;
+border:none;
+color:var(--text);
+font-size:16px;
+padding:6px 10px;
+border-radius:8px;
+transition:background 0.2s;
+}
+.lang-btn:hover, .theme-btn:hover, .settings-btn:hover{background:rgba(255,255,255,0.08);}
+.settings-btn{background:linear-gradient(90deg,rgba(168,85,255,0.2),rgba(255,62,232,0.2));border:1px solid rgba(168,85,255,0.3);}
+
+/* ===== LAYOUT ===== */
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 70px);}
+
+/* ===== SIDEBAR ===== */
+aside{
+background: rgba(10, 14, 39, 0.6);
+border-right: 1px solid rgba(0, 234, 255, 0.1);
+padding:24px 16px;
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+.nav{
+display:flex;align-items:center;gap:12px;padding:12px 14px;
+background:transparent;border:none;border-radius:12px;color:#cbd5f2;
+text-align:left;font-size:15px;transition:all 0.2s;
+}
+.nav .ico{font-size:20px;width:24px;text-align:center;}
+.nav.active{
+background:linear-gradient(90deg,rgba(0,234,255,0.15),rgba(168,85,255,0.15));
+border:1px solid rgba(0,234,255,0.3);
+color:var(--cyan);
+box-shadow:0 0 12px rgba(0,234,255,0.1);
+}
+.nav:hover{background:rgba(255,255,255,0.05);}
+
+.side-card{margin-top:auto;padding:24px 16px;border-radius:16px;text-align:center;background:linear-gradient(145deg,rgba(0,234,255,0.1),rgba(168,85,255,0.1));border:1px solid rgba(0,234,255,0.2);}
+.side-card h3{margin:0 0 4px;font-size:18px;}
+.side-card p{margin:0 0 16px;color:var(--cyan);opacity:0.8;font-size:13px;}
+.gradient-btn{
+border:none;border-radius:999px;padding:10px 24px;
+background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));
+color:#000;font-weight:700;font-size:14px;cursor:pointer;
+transition:transform 0.2s, filter 0.2s;
+}
+.gradient-btn:hover{transform:translateY(-2px);filter:brightness(1.1);}
+
+/* ===== MAIN CONTENT ===== */
+main{padding:24px;overflow:auto;}
+
+/* HERO SECTION */
+.hero{
+position:relative;border-radius:20px;padding:32px;background:linear-gradient(110deg,rgba(10,14,39,0.95),rgba(26,20,53,0.9));border:1px solid rgba(0,234,255,0.15);margin-bottom:24px;overflow:hidden;min-height:240px;display:flex;align-items:center;}
+.hero-bg-overlay{position:absolute;top:0;right:0;width:60%;height:100%;background:url('https://images.unsplash.com/photo-1534447677768-be436bb09401?w=900') no-repeat right center/cover;opacity:0.25;z-index:0;}
+.hero-content{position:relative;z-index:1;max-width:55%;}
+.hero h1{font-size:clamp(26px,4vw,42px);line-height:1.2;margin:0 0 12px;}
+.hero h1 span{background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));color:transparent;background-clip:text;}
+.hero p{font-size:16px;color:#d2defe;margin:0;}
+
+/* FEATURE CARDS */
+.feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.feature-card{border-radius:16px;padding:24px 20px;text-align:center;transition:transform 0.3s, box-shadow 0.3s;}
+.feature-card:nth-child(1){background:linear-gradient(145deg,rgba(0,234,255,0.12),rgba(0,234,255,0.04));border:1px solid rgba(0,234,255,0.25);}
+.feature-card:nth-child(2){background:linear-gradient(145deg,rgba(168,85,255,0.12),rgba(255,62,232,0.04));border:1px solid rgba(168,85,255,0.25);}
+.feature-card:nth-child(3){background:linear-gradient(145deg,rgba(255,193,7,0.12),rgba(255,193,7,0.04));border:1px solid rgba(255,193,7,0.25);}
+.feature-card:nth-child(4){background:linear-gradient(145deg,rgba(0,245,160,0.12),rgba(0,245,160,0.04));border:1px solid rgba(0,245,160,0.25);}
+.feature-card:hover{transform:translateY(-4px);}
+.feature-icon{font-size:36px;margin-bottom:12px;}
+.feature-card:nth-child(1) .feature-icon{color:var(--cyan);}
+.feature-card:nth-child(2) .feature-icon{color:var(--purple);}
+.feature-card:nth-child(3) .feature-icon{color:var(--yellow);}
+.feature-card:nth-child(4) .feature-icon{color:var(--green);}
+.feature-card h3{margin:0 0 8px;font-size:16px;}
+.feature-card p{margin:0 0 16px;font-size:13px;color:#cbd5f2;line-height:1.4;}
+.feature-btn{border:none;border-radius:999px;padding:8px 20px;font-weight:600;font-size:14px;transition:opacity 0.2s;}
+.feature-btn:hover{opacity:0.9;}
+.feature-card:nth-child(1) .feature-btn{background:var(--cyan);color:#000;}
+.feature-card:nth-child(2) .feature-btn{background:linear-gradient(90deg,var(--purple),var(--pink));color:#fff;}
+.feature-card:nth-child(3) .feature-btn{background:var(--yellow);color:#000;}
+.feature-card:nth-child(4) .feature-btn{background:var(--green);color:#000;}
+
+/* CHAT SECTION */
+.chat-container{display:grid;grid-template-columns:1fr 260px;gap:20px;}
+.chat-box{background:rgba(10,14,39,0.5);border:1px solid rgba(0,234,255,0.15);border-radius:16px;padding:20px;}
+.chat-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.chat-title{display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,rgba(168,85,255,0.2),rgba(255,62,232,0.2));border:1px solid rgba(168,85,255,0.3);border-radius:999px;padding:6px 16px;font-size:14px;}
+.model-select{background:rgba(0,0,0,0.3);border:1px solid rgba(0,234,255,0.2);border-radius:8px;padding:6px 12px;color:var(--text);font-size:13px;}
+
+/* MESSAGES */
+.messages{min-height:180px;max-height:360px;overflow-y:auto;margin-bottom:16px;}
+.message{display:flex;gap:12px;margin-bottom:16px;}
+.avatar-circle{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;}
+.avatar-circle img{width:100%;height:100%;object-fit:cover;}
+.msg-bubble{background:linear-gradient(135deg,rgba(26,20,53,0.8),rgba(10,14,39,0.8));border:1px solid rgba(0,234,255,0.15);border-radius:14px;padding:14px;flex:1;}
+.msg-bubble p{margin:4px 0;font-size:14px;}
+.msg-time{font-size:11px;color:var(--muted);text-align:right;margin-top:4px;}
+
+/* QUICK BUTTONS */
+.quick-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.quick-btn{background:rgba(10,14,39,0.6);border:1px solid rgba(0,234,255,0.2);border-radius:999px;padding:8px 14px;color:var(--text);font-size:13px;transition:all 0.2s;}
+.quick-btn:hover{border-color:var(--cyan);background:rgba(0,234,255,0.08);}
+
+/* COMPOSER */
+.composer{display:flex;align-items:flex-end;gap:10px;background:rgba(10,14,39,0.6);border:1px solid rgba(168,85,255,0.3);border-radius:14px;padding:10px;}
+.composer textarea{flex:1;background:transparent;border:none;outline:none;color:var(--text);resize:none;min-height:40px;padding:6px;font-size:14px;}
+.attach-btn, .emoji-btn{background:none;border:none;font-size:20px;padding:4px;}
+.send-btn{width:40px;height:40px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;}
+
+/* RIGHT SIDEBAR */
+.right-sidebar{display:flex;flex-direction:column;gap:16px;}
+.widget{background:rgba(10,14,39,0.5);border:1px solid rgba(0,234,255,0.15);border-radius:16px;padding:20px;}
+.widget h3{margin:0 0 14px;font-size:15px;color:var(--cyan);}
+.widget ul{list-style:none;padding:0;margin:0;}
+.widget li{padding:4px 0;font-size:13px;color:#cbd5f2;display:flex;align-items:center;gap:8px;}
+.widget li::before{content:"✓";color:var(--green);font-weight:bold;}
+.quote{margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,62,232,0.2);font-style:italic;color:var(--pink);opacity:0.8;font-size:13px;text-align:right;}
+
+/* FOOTER */
+.footer{display:flex;justify-content:space-between;align-items:center;padding:20px 0;margin-top:24px;border-top:1px solid rgba(0,234,255,0.1);font-size:12px;color:var(--muted);flex-wrap:wrap;gap:10px;}
+.footer-left a, .footer-right a{color:var(--muted);text-decoration:none;margin:0 8px;}
+.footer-left a:hover, .footer-right a:hover{color:var(--cyan);}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+.layout{grid-template-columns:240px 1fr;}
+.feature-grid{grid-template-columns:repeat(2,1fr);}
+.chat-container{grid-template-columns:1fr;}
+.right-sidebar{display:grid;grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:768px){
+.layout{display:block;}
+aside{position:sticky;top:70px;border-right:none;border-bottom:1px solid rgba(0,234,255,0.1);flex-direction:row;overflow-x:auto;padding:12px;}
+.side-card{display:none;}
+.hero-content{max-width:100%;}
+.hero-bg-overlay{width:100%;opacity:0.1;}
+.feature-grid{grid-template-columns:1fr;}
+.right-sidebar{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
+
+<!-- ===== TOPBAR ===== -->
 <header class="topbar">
-  <div class="brand"><span class="logo">Z</span><span>Zets AI<small>SMART ASSISTANT</small></span></div>
-  <div class="top-actions"><span class="online">● Online</span><button class="outline optional" id="themeBtn" title="Ganti aksen">☼</button><span class="outline">🇮🇩 ID</span></div>
+  <a href="#" class="brand">
+    <span class="logo-z">Z</span>
+    <div class="brand-text">
+      <h1>Zets AI</h1>
+      <span>Smart Assistant</span>
+    </div>
+  </a>
+  <div class="top-right">
+    <span class="status-online"><span class="dot-green"></span> Online</span>
+    <button class="theme-btn">☀️</button>
+    <button class="lang-btn">🇮🇩 ID</button>
+    <button class="settings-btn">⚙️ Pengaturan</button>
+  </div>
 </header>
+
 <div class="layout">
-<aside aria-label="Navigasi">
-  <button class="nav active" data-action="home"><span class="ico">⌂</span>Beranda</button>
-  <button class="nav" data-action="chat"><span class="ico">◉</span>Chat AI</button>
-  <button class="nav" data-prompt="Ajari saya satu topik pelajaran dengan penjelasan sederhana, contoh, lalu latihan."><span class="ico">♧</span>Tutor Pintar</button>
-  <button class="nav" data-prompt="Bantu saya membuat atau memperbaiki kode. Tanyakan detail yang kurang jika diperlukan."><span class="ico">&lt;/&gt;</span>Coding Assistant</button>
-  <button class="nav" data-prompt="Bantu saya menghasilkan ide kreatif yang unik dan bisa diterapkan."><span class="ico">✧</span>Kreativitas</button>
-  <button class="nav" data-prompt="Bantu saya menyusun prioritas, rencana, dan langkah kerja yang realistis."><span class="ico">➤</span>Produktivitas</button>
-  <button class="nav" data-action="history"><span class="ico">◷</span>Riwayat Chat</button>
-  <button class="nav" data-action="clear"><span class="ico">☆</span>Hapus Percakapan</button>
-  <button class="nav" data-action="about"><span class="ico">ⓘ</span>Tentang</button>
-  <div class="side-card"><div class="bolt">ϟ</div><h2>Zets AI</h2><p>Lebih pintar,<br>lebih cepat,<br>lebih kreatif!</p><button class="gradient-btn" id="startBtn">Mulai Sekarang →</button></div>
+
+<!-- ===== LEFT SIDEBAR ===== -->
+<aside>
+  <button class="nav active">
+    <span class="ico">🏠</span> Beranda
+  </button>
+  <button class="nav">
+    <span class="ico">💬</span> Chat AI
+  </button>
+  <button class="nav">
+    <span class="ico">📖</span> Tutor Pintar
+  </button>
+  <button class="nav">
+    <span class="ico">&lt;/&gt;</span> Coding Assistant
+  </button>
+  <button class="nav">
+    <span class="ico">💡</span> Kreativitas
+  </button>
+  <button class="nav">
+    <span class="ico">➤</span> Produktivitas
+  </button>
+  <button class="nav">
+    <span class="ico">⏱</span> Riwayat Chat
+  </button>
+  <button class="nav">
+    <span class="ico">⭐</span> Favorit
+  </button>
+  <button class="nav">
+    <span class="ico">ⓘ</span> Tentang
+  </button>
+
+  <div class="side-card">
+    <h3>Zets AI</h3>
+    <p>Lebih pintar, lebih cepat, lebih keren!</p>
+    <button class="gradient-btn">Mulai Sekarang →</button>
+  </div>
 </aside>
-<main class="main">
-<section class="hero" id="home">
-  <div class="hero-copy"><div class="eyebrow">Your everyday AI companion</div><h1>Halo, Selamat Datang di<br><span class="gradient-text">Zets AI — Smart Assistant</span></h1><p>Teman AI pintar untuk belajar, bekerja, dan berkreasi. Tanyakan apa saja, kapan saja, di mana saja.</p></div>
-  <div class="anime" aria-label="Ilustrasi anime dekoratif" role="img">👩🏻‍🎧</div>
-</section>
-<section class="features" aria-label="Fitur">
-  <article class="feature" style="--accent:#00eaff"><div class="big">♧</div><h3>Tutor Pintar</h3><p>Belajar lebih mudah dengan penjelasan, contoh, dan latihan.</p><button data-prompt="Jadilah tutor yang sabar. Bantu saya memahami materi dengan bahasa sederhana, contoh, dan latihan.">Mulai Belajar →</button></article>
-  <article class="feature" style="--accent:#f15bff"><div class="big">&lt;/&gt;</div><h3>Coding Assistant</h3><p>Bantu menulis kode, memperbaiki error, dan memahami program.</p><button data-prompt="Bertindak sebagai coding assistant. Berikan kode yang aman, lengkap, dan jelaskan cara menjalankannya.">Coba Sekarang →</button></article>
-  <article class="feature" style="--accent:#ffcf00"><div class="big">☼</div><h3>Kreativitas</h3><p>Dapatkan ide, buat konten, desain, dan solusi kreatif.</p><button data-prompt="Bantu saya membuat ide kreatif yang menarik. Berikan beberapa pilihan dan alasan singkat.">Mulai Kreatif →</button></article>
-  <article class="feature" style="--accent:#00f5a0"><div class="big">➤</div><h3>Produktivitas</h3><p>Atur tugas, rencana, dan capai tujuan dengan lebih efisien.</p><button data-prompt="Bantu saya menyusun rencana produktivitas sederhana dengan prioritas dan langkah konkret.">Mulai Rencana →</button></article>
-</section>
-<section class="chat-layout" id="chat">
-  <div class="chat">
-    <div class="chat-head"><div class="prompt-title">✦ Ada yang bisa Zets AI bantu hari ini?</div><span class="outline model">◈ Model AI · Groq</span></div>
-    <div class="messages" id="messages" aria-live="polite">
-      <div class="message"><div class="avatar">🌸</div><div class="bubble"><p>✨ Halo! 👋</p><p>Saya <strong>Zets AI</strong>, asisten pintar kamu. Saya siap membantu belajar, menulis, coding, membuat ide, dan banyak lagi.</p><p>Silakan ketik pesan di bawah atau pilih salah satu contoh.</p></div></div>
-    </div>
-    <div class="quick">
-      <button class="chip" data-prompt="Jelaskan cara kerja kecerdasan buatan dengan contoh sederhana.">✦ Jelaskan cara kerja AI</button>
-      <button class="chip" data-prompt="Bantu saya memahami konsep matematika ini dengan langkah yang jelas.">▣ Belajar matematika</button>
-      <button class="chip" data-prompt="Tulis contoh kode Python sederhana dan jelaskan tiap bagian.">&lt;/&gt; Tulis kode Python</button>
-      <button class="chip" data-prompt="Berikan 5 ide konten kreatif yang bisa saya kembangkan.">✧ Ide konten</button>
-      <button class="chip" data-prompt="Terjemahkan teks berikut dan jelaskan istilah pentingnya: ">文 Terjemahkan teks</button>
-      <button class="chip" data-prompt="Buat cerita pendek yang menarik dengan tokoh dan akhir yang berkesan.">♡ Cerita menarik</button>
-    </div>
-    <form class="composer" id="chatForm"><textarea id="userInput" rows="1" maxlength="8000" placeholder="Ketik pesan kamu di sini..." aria-label="Pesan untuk Zets AI"></textarea><button class="send" id="sendBtn" aria-label="Kirim pesan">➤</button></form>
-    <div class="status" id="status" role="status">Siap membantu. Jangan kirim kata sandi atau informasi rahasia.</div>
-  </div>
-  <div class="right-widgets">
-    <div class="widget"><h3>ϟ Fitur Cepat</h3><ul><li>Respons AI melalui API</li><li>Prompt siap pakai</li><li>Desain responsif</li><li>Backend server-side</li></ul></div>
-    <div class="widget"><h3>✦ Tips</h3><p>Jelaskan tujuan, konteks, dan format jawaban yang kamu inginkan agar hasilnya lebih sesuai.</p></div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="hero-bg-overlay"></div>
+  <div class="hero-content">
+    <h1>Halo, Selamat Datang di<br><span>Zets AI – Smart Assistant</span></h1>
+    <p>Teman AI pintar untuk belajar, bekerja, dan berkreasi. Tanyakan apa saja, kapan saja, di mana saja!</p>
   </div>
 </section>
-<footer class="footer"><strong>Zets AI — Smart Assistant</strong><span>Privasi · Bantuan</span><span>Copyright @ 2026 zproject All right reserved</span></footer>
+
+<!-- FEATURE CARDS -->
+<section class="feature-grid">
+  <div class="feature-card">
+    <div class="feature-icon">📖</div>
+    <h3>Tutor Pintar</h3>
+    <p>Belajar lebih mudah dengan penjelasan lengkap, contoh, dan latihan.</p>
+    <button class="feature-btn">Mulai Belajar →</button>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">&lt;/&gt;</div>
+    <h3>Coding Assistant</h3>
+    <p>Bantu menulis kode, memperbaiki error, dan optimasi program.</p>
+    <button class="feature-btn">Coba Sekarang →</button>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">💡</div>
+    <h3>Kreativitas</h3>
+    <p>Dapatkan ide, buat konten, desain, solusi kreatif tanpa batas.</p>
+    <button class="feature-btn">Mulai Kreatif →</button>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">🚀</div>
+    <h3>Produktivitas</h3>
+    <p>Atur tugas, rencana, capai tujuan lebih cepat dan efisien.</p>
+    <button class="feature-btn">Tingkatkan Sekarang →</button>
+  </div>
+</section>
+
+<!-- CHAT + RIGHT SIDEBAR -->
+<section class="chat-container">
+  <div class="chat-box">
+    <div class="chat-header">
+      <div class="chat-title">✨ Ada yang bisa Zets AI bantu hari ini?</div>
+      <select class="model-select">
+        <option>Model: Groq (Llama 3)</option>
+      </select>
+    </div>
+
+    <div class="messages">
+      <div class="message">
+        <div class="avatar-circle">😘</div>
+        <div class="msg-bubble">
+          <p><strong>Halo! 👋</strong></p>
+          <p>Saya Zets AI, asisten pintar kamu. Saya siap membantu kamu dalam berbagai hal, seperti belajar, menulis, coding, membuat ide, dan banyak lagi.</p>
+          <p>Silakan ketik pesan kamu di bawah ini, atau pilih salah satu contoh di bawah!</p>
+          <div class="msg-time">14:32</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-buttons">
+      <span style="font-size:13px;color:var(--muted);padding:4px 8px;">Contoh pertanyaan:</span>
+      <button class="quick-btn">🏛 Jelaskan cara kerja AI</button>
+      <button class="quick-btn">📊 Bantu selesaikan soal matematika</button>
+      <button class="quick-btn">&lt;&gt; Tulis kode Python</button>
+      <button class="quick-btn">💡 Buatkan ide konten</button>
+      <button class="quick-btn">🌐 Terjemahkan teks</button>
+      <button class="quick-btn">✨ Buatkan cerita menarik</button>
+    </div>
+
+    <form class="composer">
+      <button class="attach-btn">📎</button>
+      <textarea placeholder="Ketik pesan kamu di sini…"></textarea>
+      <button class="emoji-btn">😊</button>
+      <button class="send-btn">➤</button>
+    </form>
+  </div>
+
+  <div class="right-sidebar">
+    <div class="widget">
+      <h3>⚡ Fitur Cepat</h3>
+      <ul>
+        <li>Respons cepat</li>
+        <li>Konteks percakapan</li>
+        <li>Mendukung multi-modal</li>
+        <li>Aman & terpercaya</li>
+      </ul>
+      <div class="quote">
+        "Ide hebat selalu dimulai dari pertanyaan sederhana."<br>
+        — Zets AI 
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-left">
+    <a href="#">Privasi</a> • <a href="#">Syarat & Ketentuan</a> • <a href="#">Bantuan</a>
+  </div>
+  <div class="footer-center">
+     Dibuat oleh Zet's 
+  </div>
+  <div class="footer-right">
+    ⚡ Copyright © 2026 zproject All right reserved
+  </div>
+</footer>
+
 </main>
 </div>
-<script>
-const messages=document.getElementById('messages'),input=document.getElementById('userInput'),form=document.getElementById('chatForm'),sendBtn=document.getElementById('sendBtn'),statusEl=document.getElementById('status');
-let history=[];
-function addMessage(role,text){const row=document.createElement('div');row.className='message '+(role==='user'?'user':'');if(role!=='user'){const av=document.createElement('div');av.className='avatar';av.textContent='🌸';row.appendChild(av)}const bubble=document.createElement('div');bubble.className='bubble';text.split('\n').forEach((line,i)=>{const p=document.createElement('p');p.textContent=line||' ';bubble.appendChild(p)});row.appendChild(bubble);messages.appendChild(row);messages.scrollTop=messages.scrollHeight;return bubble}
-async function sendMessage(text){text=(text||input.value).trim();if(!text||sendBtn.disabled)return;addMessage('user',text);input.value='';sendBtn.disabled=true;statusEl.textContent='Zets AI sedang menyiapkan jawaban…';const loading=addMessage('assistant','Sedang berpikir…');history.push({role:'user',content:text});try{const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-16)})});let data={};try{data=await res.json()}catch{}if(!res.ok)throw new Error(data.error||('Permintaan gagal ('+res.status+').'));const answer=data.reply||data.message||data.content||data.choices?.[0]?.message?.content;if(!answer)throw new Error('Respons API kosong. Periksa backend api/chat.js.');loading.replaceChildren();String(answer).split('\n').forEach(line=>{const p=document.createElement('p');p.textContent=line||' ';loading.appendChild(p)});history.push({role:'assistant',content:String(answer)});statusEl.textContent='Jawaban diterima.'}catch(e){loading.replaceChildren();const p=document.createElement('p');p.textContent='Maaf, chat belum berhasil: '+e.message;loading.appendChild(p);statusEl.textContent='Periksa deployment dan konfigurasi API di Vercel.';history.pop()}finally{sendBtn.disabled=false;input.focus()}}
-form.addEventListener('submit',e=>{e.preventDefault();sendMessage()});input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}});
-document.querySelectorAll('[data-prompt]').forEach(btn=>btn.addEventListener('click',()=>{input.value=btn.dataset.prompt;input.focus();document.getElementById('chat').scrollIntoView({behavior:'smooth',block:'start'})}));
-document.querySelectorAll('[data-action]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));btn.classList.add('active');const action=btn.dataset.action;if(action==='chat'){document.getElementById('chat').scrollIntoView({behavior:'smooth'});input.focus()}else if(action==='home'){document.getElementById('home').scrollIntoView({behavior:'smooth'})}else if(action==='clear'){if(confirm('Hapus tampilan percakapan saat ini?')){messages.replaceChildren();history=[];statusEl.textContent='Percakapan baru dimulai.'}}else if(action==='history'){statusEl.textContent=history.length?'Pesan dalam sesi ini: '+history.length+'. Riwayat tidak disimpan permanen.':'Belum ada riwayat pada sesi ini.'}else if(action==='about'){alert('Zets AI — Smart Assistant\\nAntarmuka AI dengan backend API. Copyright @ 2026 zproject All right reserved.')}}));
-document.getElementById('startBtn').addEventListener('click',()=>{document.getElementById('chat').scrollIntoView({behavior:'smooth'});input.focus()});
-document.getElementById('themeBtn').addEventListener('click',()=>{document.documentElement.style.setProperty('--cyan',getComputedStyle(document.documentElement).getPropertyValue('--pink').trim());document.documentElement.style.setProperty('--pink',getComputedStyle(document.documentElement).getPropertyValue('--purple').trim());document.documentElement.style.setProperty('--purple','#00eaff')});
-</script>
+
 </body>
 </html>
