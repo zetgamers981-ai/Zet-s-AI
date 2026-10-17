@@ -1,0 +1,22 @@
+
+{
+  "id": "/",
+  "name": "Zets AI - Smart Assistant",
+  "short_name": "Zets AI",
+  "description": "Asisten AI pintar untuk belajar, coding, kreativitas, dan produktivitas.",
+  "lang": "id",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#03081f",
+  "theme_color": "#03081f",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
